@@ -39,10 +39,10 @@ def checkFile(filename):
 
     if not os.path.isfile(filename):
         print('[-] %s  does not exist.' % filename)  
-        exit(0)
+        exit(1)
     if not os.access(filename, os.R_OK):
         print('[-] %s  access denied.' % filename) 
-        exit(0)
+        exit(1)
 
 
 def checkPass(cryptPass,dictFile):
@@ -66,7 +66,7 @@ def checkPass(cryptPass,dictFile):
     
     except Exception as e:
         print(e)
-        exit(0)
+        exit(1)
 
 def main():
 	
@@ -79,12 +79,12 @@ def main():
     parser.add_option('-d', dest='dictFile', type='string', \
     help='specify dictionary file')
     parser.add_option('-t', default=1, dest='threadNo', type='int', \
-    help='specify dictionary file')
+    help='specify number of threads')
     (opt,args) = parser.parse_args()
 
     if(opt.passFile == None) | (opt.dictFile == None):
         print(parser.usage)
-        exit(0)
+        exit(1)
     else:
 
         if opt.threadNo > 0:
@@ -92,7 +92,7 @@ def main():
         else:
             print ('\nInvalid thread paramater: %d' % opt.threadNo)
             print(parser.usage)
-            exit(0)
+            exit(1)
         
         checkFile(opt.dictFile)
         checkFile(opt.passFile)
@@ -103,10 +103,11 @@ def main():
             if ":" in line:
                 CrackThread(line,opt.dictFile).start()
         passFile.close()
+        exit(0)
 
     except Exception as e:
         print(e)
-        exit(0)
+        exit(1)
 
 
 if __name__ == "__main__":
