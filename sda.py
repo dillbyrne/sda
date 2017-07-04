@@ -50,7 +50,7 @@ def checkPass(cryptPass,dictFile):
     salt = cryptPass
     
     try:
-        wordList = open(dictFile,'r',encoding = "ISO-8859-1")
+        wordList = open(dictFile,'r',encoding = 'utf-8')
 
         for word in wordList.readlines():
             word = word.strip('\n')
@@ -98,7 +98,7 @@ def main():
         checkFile(opt.passFile)
     
     try:
-        passFile = open(opt.passFile,'r',encoding = 'ISO-8859-1')
+        passFile = open(opt.passFile,'r',encoding = 'utf-8')
         for line in passFile.readlines():
             if ":" in line:
                 CrackThread(line,opt.dictFile).start()
